@@ -51,10 +51,10 @@ namespace TsiWebApp.Models
         /// </summary>
         public enum SensorType
         {
-            hvac,
-            lighting,
+            hvacstatus,
+            damperposition,
             temp,
-            occupancy,
+            pressure,
         }
 
         /// <summary>
