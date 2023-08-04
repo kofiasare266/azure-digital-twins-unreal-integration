@@ -11,19 +11,19 @@ param repoBranchName string
 param unique string = substring(uniqueString(resourceGroup().id), 0, 2)
 
 var location = resourceGroup().location
-var iotHubName = 'iothub-${unique}'
-var adtName = 'adt-${unique}'
-var signalrName = 'signalr-${unique}'
-var serverFarmName = 'farm-${unique}'
-var storageName = 'store${unique}'
-//var eventGridName = 'eg${unique}'
-var funcAppName = 'funcapp-${unique}'
-var webAppName = 'webapp-${unique}'
-var eventGridIngestName = 'egingest-${unique}'
+var iotHubName = 'iothub-dtir'
+var adtName = 'adt-dtir'
+var signalrName = 'signalr-dtir'
+var serverFarmName = 'farm-dtir'
+var storageName = 'storedtir'
+//var eventGridName = 'egdtir'
+var funcAppName = 'funcapp-dtir1'
+var webAppName = 'webapp-dtir'
+var eventGridIngestName = 'egingest-dtir'
 var ingestFuncName = 'IoTHubIngest'
 var signalrFuncName = 'broadcast'
-var adtChangeLogTopicName = 'adtchangelogtopic-${unique}'
-var ehNamespace = 'eventhubs-${unique}'
+var adtChangeLogTopicName = 'adtchangelogtopic-dtir'
+var ehNamespace = 'eventhubs-dtir'
 var ehNamespaceAuthRule = 'RootManageSharedAccessKey'
 var ehTwinsName = 'ehtwin'
 var ehTwinsAuthRule = 'twinsauthrule'
@@ -33,8 +33,8 @@ var adtEhEndpoint = 'twinendpoint'
 var adtEhRoute = 'twinroute'
 var adtEgEndpoint = 'changelogendpoint'
 var adtEgRoute = 'changelogroute'
-var tsiName = 'tsi-${unique}'
-var tsiStorageName = 'tsistr${unique}'
+var tsiName = 'tsi-dtir}'
+var tsiStorageName = 'tsidticoldstore'
 var tsiSkuName = 'L1'
 var tsiCapacity = 1
 var tsiTimeSeriesId = '$dtId'
@@ -56,7 +56,7 @@ var ADTRoleDefinitionUserName = guid(resourceId('Microsoft.ManagedIdentity/userA
 var ADTRoleDefinitionAppRegName = guid(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', appRegId), ADTroleDefinitionId, resourceGroup().id)
 
 var tags = {
-  type: 'adt-unreal-demo'
+  type: 'adt-unreal-dtir'
   deploymentId: unique
 }
 
@@ -160,7 +160,7 @@ resource iot 'microsoft.devices/iotHubs@2020-03-01' = {
   location: location
   tags: tags
   sku: {
-    name: 'S1'
+    name: 'Free'
     capacity: 1
   }
   properties: {
@@ -195,7 +195,7 @@ resource storage 'Microsoft.Storage/storageAccounts@2018-02-01' = {
   location: location
   tags: tags
   sku: {
-    name: 'Standard_LRS'
+    name: 'Y1'
   }
   kind: 'StorageV2'
   properties: {
@@ -242,9 +242,9 @@ resource signalr 'Microsoft.SignalRService/signalR@2020-07-01-preview' = {
   location: location
   tags: tags
   sku: {
-    name: 'Standard_S1'
+    name: 'F1'
     capacity: 1
-    tier: 'Standard'
+    tier: 'Free'
   }
   properties: {
     cors: {
@@ -281,10 +281,10 @@ resource appserver 'Microsoft.Web/serverfarms@2021-01-15' = {
   tags: tags
   kind: 'app'
   sku: {
-    name: 'B1'
-    tier: 'Basic'
-    size: 'B1'
-    family: 'B'
+    name: 'F1'
+    tier: 'Free'
+    size: 'F1'
+    family: 'F'
     capacity: 1
   }
 }
@@ -338,7 +338,7 @@ resource funcApp 'Microsoft.Web/sites@2021-01-15' = {
           value: listKeys(ehTsiAuthRule, '2021-01-01-preview').primaryConnectionString
         }
       ]
-      alwaysOn: true
+      alwaysOn: false
       cors: {
         supportCredentials: true
         allowedOrigins: [
