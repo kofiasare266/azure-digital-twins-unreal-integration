@@ -34,7 +34,7 @@ namespace TsiWebApp.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(
             SensorType sensorType,
-            string since = "60m",
+            string since = "120m",
             string interval = "pt3m",
             YAxisState yAxis = YAxisState.stacked,
             Theme theme = Theme.dark,
